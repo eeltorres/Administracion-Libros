@@ -1,0 +1,20 @@
+1, El señor de los anillos, J.R.R. Tolkien, Fantasía, 1954, 10
+2, El milagro ,George Orwell, Ciencia ficción, 1949, 15
+3, Cien años de soledad, Gabriel García Márquez, Realismo mágico, 1967, 8
+4, Harry Potter y la piedra filosofal, J.K. Rowling, Fantasía, 1997, 20
+5, Orgullo y prejuicio, Jane Austen, Romance, 1813, 12
+6, El código Da Vinci, Dan Brown, Suspenso, 2003, 18
+7, El Alquimista, Paulo Coelho, Ficción, 1988, 25
+8, La sombra del viento, Carlos Ruiz Zafón, Misterio, 2001, 11
+9, Matar un ruiseñor, Harper Lee, Ficción, 1960, 9
+10, El gran Gatsby, F. Scott Fitzgerald, Ficción, 1925, 14
+11, Juego de tronos, George R.R. Martin, Fantasía, 1996, 17
+12, Crónica de una muerte anunciada, Gabriel García Márquez, Ficción, 1981, 7
+13, El diario de Ana Frank, Anne Frank, Biografía, 1947, 6
+14, Los pilares de la Tierra, Ken Follett, Histórica, 1989, 13
+15, La ciudad y los perros, Mario Vargas Llosa, Realismo, 1963, 10
+16, Los juegos del hambre, Suzanne Collins, Ciencia ficción, 2008, 16
+17, Don Quijote de la Mancha, Miguel de Cervantes, Clásico, 1605, 5
+18, La ladrona de libros, Markus Zusak, Drama, 2005, 9
+19, Las aventuras de Tom Sawyer, Mark Twain, Aventura, 1876, 11
+20, El nombre del viento, Patrick Rothfuss, Fantasía, 2007, 20
