@@ -6,7 +6,6 @@
 #include <algorithm>
 #include <sstream>
 #include <iomanip>
-
 using namespace std;
 
 // Declaracion de Objetos a Utilizar
@@ -56,19 +55,32 @@ void obtenerUsuarios(vector<Usuario>& usuarios);
 // FUNCION PARA LEER LOS LIBROS
 void obtenerLibros(vector<Libro>& libros);
 
+// FUNCION PARA AÑADIR LIBRO
+void aniadirLibro(Libro& libro);
+
+// FUNCION OBTENER ULTIMO ID
+int obtenerUltimoId();
+
+//FUNCION PARA INYECTAR LOS DATOS MODIFICADOS
+void actualizarLibros(vector<Libro>& libros);
+
 // DECLARACION DE VARIABLES GLOBALES
 string nameUser = "";
+
 
 
 /********************************* FUNCION PRINCIPAL *********************************************************/
 int main() {
 	//Declaracion de variables con scope en el Main
     string fName, lName;
-    int op; // variable para la seleccion del usuario
+    int op, op_1; // variable para la seleccion del usuario
     
     // CREAR LOS VECTORES DE CADA OBJETO
     vector<Usuario> usuarios;
     vector<Libro> libros;
+    
+    // DECLARAR OBJETO
+	Libro libro;
     
 	
 	inicio:
@@ -118,15 +130,58 @@ int main() {
     
     switch(op){
     	case 1:
-    		cout<<endl<<"----------------------------------------------------------------------------------------"<<endl;
-    		cout<<"¿Que desea realizar?\n1. Crear Libros\n2. Modificar Libros\n3. Eliminar Libros\n4. Regresar al menu anterior\n0. Cerrar el programa"<<endl;
-    		cin>>op;
-    		switch(op){
+    		cout << endl <<"----------------------------------------------------------------------------------------"<<endl;
+    		cout << "¿Que desea realizar?\n1. Crear Libros\n2. Modificar Libros\n3. Eliminar Libros\n4. Regresar al menu anterior\n0. Cerrar el programa"<<endl;
+    		cin >> op_1;
+    		
+    		switch(op_1){
     			case 1:
+    				system("cls");
+    				
+    				libro.id = obtenerUltimoId() + 1; 
+    				cout <<"Ingrese Titulo del Libro: ";
+    				cin >> libro.titulo;
+    				cout <<"Ingrese Autor del Libro: ";
+    				cin >> libro.autor;
+    				cout << "Ingrese Genero del Libro: ";
+    				cin >> libro.genero;
+    				cout << "Ingrese Anio de Publicacion: ";
+    				cin >> libro.anioPublicacion;
+    				cout << "Ingrese no. de Copias Disponibles: ";
+    				cin >> libro.numCopiasDisponibles;
+    				
+    				aniadirLibro(libro);
     				break;
     			case 2:
     				system("cls");
     				obtenerLibros(libros);
+    				
+    				cout << "\nSeleccione el numero de Libro que desea modificar: ";
+    				cin >> op;
+    				op = op -1;
+    				
+    				system("cls");
+	    				cout << "Titulo anterior: " << libros[op].titulo << endl;
+	    				cout << endl << "Ingrese el nuevo Titulo a Modificar: ";
+	    				getline(cin, libros[op].titulo);
+	    				
+	    				cout << "Autor anterior: " << libros[op].titulo << endl;
+	    				cout << endl << "Ingrese el nuevo Autor a modificar: " ;
+	    				getline(cin, libros[op].autor);
+	    				
+	    				cout << "Genero anterior: " << libros[op].genero;
+	    				cout << "Ingrese el nuevo genero a modificar: ";
+	    				getline(cin, libros[op].genero);
+	    				
+	    				cout << "Anio de publicacion anterior: " << libros[op].anioPublicacion << endl;
+	    				cout << "Anio de publicacion nuevo a modificar: ";
+	    				getline(cin, libros[op].anioPublicacion);
+	    				
+	    				cout << "Numero de Copias disponibles actualmente: " << libros[op].noCopiasDisponibles << endl;
+	    				cout << "Numero de Copias disponibles a modificar :";
+	    				getline(cin, libros[op].noCopiasDisponibles);
+	    				
+	    				system ("pause");
     				break;
     			case 3:
     				break;
@@ -187,7 +242,16 @@ int main() {
     		break;
 	}
         
+    system("cls");
+    cout << "Si desea volver al menu principal presione 1, si desea salir presione cualquier tecla " <<endl;
+    cin >> op;
     
+    if(op == 1){
+    	goto menu_principal;
+	}
+	system("cls");
+	cout << " HA TERMINADO EL PROGRAMA "<< endl;
+
     return 0;
 }
 
@@ -284,7 +348,75 @@ void obtenerLibros(vector<Libro>& libros){
     }
     cout << "--------------------------------------------------------------------------------------------------------------------" << endl;
     
-    system("pause");
-		archivoLibros.close();
+	archivoLibros.close();
 		
+}
+
+// AÑADIR LIBRO
+void aniadirLibro(Libro& libro){
+	ofstream archivoLibros;
+	
+	archivoLibros.open("libros.txt", ios::app);
+	
+	if(archivoLibros.fail()){
+		cout<<"Hubo un error al abrir el archivo libros.txt"<<endl;
+		exit(1);
+	}
+	
+	archivoLibros << libro.id<<", "<<libro.titulo<<", "<<libro.autor<<", "<<libro.genero<<", "<<libro.anioPublicacion<<", "<<libro.numCopiasDisponibles<<endl;
+	
+	archivoLibros.close();
+	cout << "Libro agregado con Exito"<< endl;
+}
+
+
+// OBTENER ULTIMO ID
+int obtenerUltimoId(){
+	
+	ifstream archivoLibros;
+	
+	archivoLibros.open("libros.txt", ios::in);
+	
+	if(archivoLibros.fail()){
+		cerr<<"No se pudo abrir el archivo Libros.txt"<<endl;
+		system("pause");
+		exit(1);
+	}
+	
+	string dataLibros;
+	int lastId;
+	
+	while(getline(archivoLibros, dataLibros)){
+		stringstream ss(dataLibros);
+		
+        string idStr;
+        getline(ss, idStr, ',');
+		
+		int id = stoi(idStr);
+        if (id > lastId) {
+            lastId = id; // Actualizar el último id si es mayor que el actual
+        }
+	}
+	
+	archivoLibros.close();
+	
+	return lastId;
+}
+
+//FUNCION PARA INYECTAR LOS DATOS MODIFICADOS
+void actualizarLibros(vector<Libro>& libros){
+	
+	ofstream archivoLibros;
+	
+	archivoLibros.open("libros.txt");
+	
+	if(archivoLibros.fail()){
+		cerr<<"Hubo un error al abrir el archivo libros.txt"<<endl;
+		exit(1);
+	}
+	
+	for (const Libro libro& : libros){
+		
+	}
+	
 }
